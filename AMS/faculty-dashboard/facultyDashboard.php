@@ -20,6 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     $dbcon = mysqli_connect("localhost", "root", "", "AMS");
 
+    //Fetch user details using 'USER_ID'
+    $sql="SELECT * FROM users WHERE USER_ID='$userid'";
+    $user=mysqli_query($dbcon,$sql);
+    if($user){
+        $user_row=mysqli_fetch_array($user);
+        $_SESSION["ROLLNO"]=$user_row['USER_NAME'];
+    }
+
     // Fetch teacher details using 'USER_ID'
     $sql = "SELECT * FROM teachers WHERE USER_ID='$userid'";
     $teacher = mysqli_query($dbcon, $sql);
@@ -377,8 +385,8 @@ $dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
                         <p><?php echo $total_subjects; ?></p>
                     </div>
                     <div class="card total-contents">
-                        <h3>Total Uploads</h3>
-                        <p><?php echo $note_count; ?></p>
+                        <div style="height:15px;"></div>
+                        <p><?php echo $_SESSION["ROLLNO"]; ?></p>
                     </div>
                 </div>
                 <div class="charts">
